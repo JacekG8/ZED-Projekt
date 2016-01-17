@@ -17,11 +17,12 @@ output:
 7. [Sekcje sprawdzającą korelacje między zmiennymi; sekcja ta powinna zawierać jakąś formę graficznej prezentacji korelacji](#7)
 8. [Określenie ile przykładów ma każda z klas (res_name)](#8)
 9. [Wykresy rozkładów liczby atomów (local_res_atom_non_h_count) i elektronów (local_res_atom_non_h_electron_sum)](#9)
-10. [róbę odtworzenia następującego wykresu (oś X - liczba elektronów, oś y - liczba atomów)](#10)
+10. [Próbę odtworzenia następującego wykresu (oś X - liczba elektronów, oś y - liczba atomów)](#10)
 
 
 * Zadanie 1
 
+#<a name="1"></a>
 ### Kod wyliczający wykorzystane biblioteki;
 
 
@@ -36,12 +37,12 @@ library("gtable")
 ```
 
 * Zadanie 2
-
+#<a name="2"></a>
 ### Kod zapewniający powtarzalność wyników przy każdym uruchomieniu raportu na tych samych danych;
 
 
 ?? :(
-
+#<a name="3"></a>
 * Zadanie 3
 
 ### Kod pozwalający wczytać dane z pliku;
@@ -51,7 +52,7 @@ library("gtable")
 data <- read.csv(file = "all_summary.txt", dec = ".", sep = ";", header = TRUE)
 ```
 
-
+#<a name="4"></a>
 * Zadanie 4, * Zadanie 5
 
 ### - Kod usuwający z danych wiersze posiadające wartość zmiennej res_name równą: “DA”,“DC”,“DT”, “DU”, “DG”, “DI”,“UNK”, “UNX”, “UNL”, “PR”, “PD”, “Y1”, “EU”, “N”, “15P”, “UQ”, “PX4” lub “NAN, 
@@ -66,7 +67,7 @@ distinct(pdb_code, res_name)
 ```
 
 
-
+#<a name="5"></a>
 * Zadanie 6
 
 ### Krótkie podsumowanie wartości w każdej kolumnie;
@@ -84,12 +85,12 @@ str(FiltData)
 ```{r}
 summary.data.frame(FiltData)
 ```
-
+#<a name="6"></a>
 * Zadanie 7
 
 ### Sekcje sprawdzającą korelacje między zmiennymi; sekcja ta powinna zawierać jakąś formę graficznej prezentacji korelacji;
 
-
+#<a name="7"></a>
 * Zadanie 8
 
 ### Określenie ile przykładów ma każda z klas (res_name);
@@ -98,6 +99,8 @@ summary.data.frame(FiltData)
 NaCount <- FiltData %>% select(res_name) %>% group_by(res_name) %>% summarise(count = n()) %>% arrange(desc(count), res_name)
 head(NaCount, 20)
 ```
+
+#<a name="8"></a>
 * Zadanie 9
 
 ### Wykresy rozkładów liczby atomów (local_res_atom_non_h_count) i elektronów (local_res_atom_non_h_electron_sum); 
@@ -115,6 +118,8 @@ xlab("count(variable)") +
 scale_x_sqrt() +
 theme_minimal()
 ```
+
+#<a name="9"></a>
 * Zadanie 10
 
 ###  Próbę odtworzenia następującego wykresu (oś X - liczba elektronów, oś y - liczba atomów):

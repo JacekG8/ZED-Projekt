@@ -7,6 +7,19 @@ output:
     toc: true
 ---
 
+### Spis treści
+
+1. [Kod wyliczający wykorzystane biblioteki](#1)
+2. [Kod zapewniający powtarzalność wyników przy każdym uruchomieniu raportu na tych samych danych](#2)
+3. [Kod pozwalający wczytać dane z pliku](#3)
+4. [Kod usuwający z danych wiersze posiadające wartość zmiennej res_name równą: “DA”,“DC”,“DT”, “DU”, “DG”, “DI”,“UNK”, “UNX”, “UNL”, “PR”, “PD”, “Y1”, “EU”, “N”, “15P”, “UQ”, “PX4” lub “NAN, ](#4)
+6. [Krótkie podsumowanie wartości w każdej kolumnie](#6)
+7. [Sekcje sprawdzającą korelacje między zmiennymi; sekcja ta powinna zawierać jakąś formę graficznej prezentacji korelacji](#7)
+8. [Określenie ile przykładów ma każda z klas (res_name)](#8)
+9. [Wykresy rozkładów liczby atomów (local_res_atom_non_h_count) i elektronów (local_res_atom_non_h_electron_sum)](#9)
+10. [róbę odtworzenia następującego wykresu (oś X - liczba elektronów, oś y - liczba atomów)](#10)
+
+
 * Zadanie 1
 
 ### Kod wyliczający wykorzystane biblioteki;
@@ -42,7 +55,7 @@ data <- read.csv(file = "all_summary.txt", dec = ".", sep = ";", header = TRUE)
 * Zadanie 4, * Zadanie 5
 
 ### - Kod usuwający z danych wiersze posiadające wartość zmiennej res_name równą: “DA”,“DC”,“DT”, “DU”, “DG”, “DI”,“UNK”, “UNX”, “UNL”, “PR”, “PD”, “Y1”, “EU”, “N”, “15P”, “UQ”, “PX4” lub “NAN, 
-# - kod pozostawiający tylko unikatowe pary wartości (pdb_code, res_name) 
+### - kod pozostawiający tylko unikatowe pary wartości (pdb_code, res_name) 
 
 
 ```{r}

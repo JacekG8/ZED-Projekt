@@ -1,0 +1,115 @@
+---
+title: "projekt"
+author: "Jacek Góral"
+date: "16 stycznia 2016"
+output: 
+  html_document:
+    toc: true
+---
+
+* Zadanie 1
+
+### Kod wyliczający wykorzystane biblioteki;
+
+
+```{r}
+library("knitr")
+library("dplyr")
+library("reshape2")
+library("ggplot2")
+library("ggExtra")
+library("corrplot")
+library("gtable")
+```
+
+* Zadanie 2
+
+### Kod zapewniający powtarzalność wyników przy każdym uruchomieniu raportu na tych samych danych;
+
+
+?? :(
+
+* Zadanie 3
+
+### Kod pozwalający wczytać dane z pliku;
+
+
+```{r}
+data <- read.csv(file = "all_summary.txt", dec = ".", sep = ";", header = TRUE)
+```
+
+
+* Zadanie 4, * Zadanie 5
+
+### - Kod usuwający z danych wiersze posiadające wartość zmiennej res_name równą: “DA”,“DC”,“DT”, “DU”, “DG”, “DI”,“UNK”, “UNX”, “UNL”, “PR”, “PD”, “Y1”, “EU”, “N”, “15P”, “UQ”, “PX4” lub “NAN, 
+# - kod pozostawiający tylko unikatowe pary wartości (pdb_code, res_name) 
+
+
+```{r}
+DelData <- c("DA", "DC", "DT", "DU", "DG", "DI", "UNK", "UNX", "UNL", "PR", "PD", "Y1", "EU", "N", "15P", "UQ", "PX4")
+FiltData <- data %>% 
+filter(!(res_name %in% DelData) | is.na(res_name)) %>% 
+distinct(pdb_code, res_name)
+```
+
+
+
+* Zadanie 6
+
+### Krótkie podsumowanie wartości w każdej kolumnie;
+
+
+
+#### pierwsze podsumowanie
+
+```{r}
+str(FiltData)
+```
+
+#### drugie podsumowanie
+
+```{r}
+summary.data.frame(FiltData)
+```
+
+* Zadanie 7
+
+### Sekcje sprawdzającą korelacje między zmiennymi; sekcja ta powinna zawierać jakąś formę graficznej prezentacji korelacji;
+
+
+* Zadanie 8
+
+### Określenie ile przykładów ma każda z klas (res_name);
+
+```{r}
+NaCount <- FiltData %>% select(res_name) %>% group_by(res_name) %>% summarise(count = n()) %>% arrange(desc(count), res_name)
+head(NaCount, 20)
+```
+* Zadanie 9
+
+### Wykresy rozkładów liczby atomów (local_res_atom_non_h_count) i elektronów (local_res_atom_non_h_electron_sum); 
+
+
+```{r}
+AtEl <- FiltData %>% 
+select(local_res_atom_non_h_count, local_res_atom_non_h_electron_sum) %>% 
+transmute(atoms = local_res_atom_non_h_count, electrons = local_res_atom_non_h_electron_sum)
+AtEl <- melt(AtEl)
+
+ggplot(AtEl) + 
+geom_freqpoly(aes(x = value, y = ..density.., colour = variable), binwidth = 1) + 
+xlab("count(variable)") + 
+scale_x_sqrt() +
+theme_minimal()
+```
+* Zadanie 10
+
+###  Próbę odtworzenia następującego wykresu (oś X - liczba elektronów, oś y - liczba atomów):
+
+
+```{r}
+Wykres  <- ggplot(FiltData, aes(x=local_res_atom_non_h_electron_sum, y=local_res_atom_non_h_count)) + stat_density2d(aes(fill=..level..), geom="polygon") + scale_fill_gradientn(colours=c("darkslateblue", "yellow", "red")) + theme(legend.position = "none", axis.title = element_blank(), panel.background = element_rect(fill = "darkslateblue"), panel.grid=element_blank(), panel.border=element_blank()) + scale_y_continuous(expand = c(0, 0), limits = c(0, 100), breaks=seq(0,100, by=20)) + scale_x_continuous(expand = c(0, 0), limits = c(0, 650), breaks=seq(0,650, by=100))
+
+ggMarginal(Wykres, type = "histogram", xparams = list(binwidth = 5, fill = "red"), yparams = list(binwidth = 1, fill = "red"))
+
+```
